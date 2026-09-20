@@ -50,42 +50,48 @@
 
 ```text
 Amazon Job/
-├── index.html                 # Main SPA dashboard shell (App root, toast container, script loader)
-├── login.html                 # 3D animated perspective canvas login portal with RBAC
-├── README.md                  # Project overview, installation guide & documentation
-├── CODEBASE_STRUCTURE.md      # In-depth architectural documentation (Gujarati & English)
-├── Last Convertation.md       # Session handover, work tracking & master recovery file
-├── css/
-│   └── styles.css             # Unified cyberpunk glassmorphism design system (~49 KB)
-└── js/
-    ├── bundle.js              # Production standalone bundle (~4,400+ lines of core logic)
-    ├── app.js                 # Modular router & session activity listener
-    ├── state.js               # Central State Store with LocalStorage persistence
-    ├── unifiedDashboard.js    # Dashboard tabs & UI rendering engine
-    ├── publicScanner.js       # Schedule ID scanning logic
-    └── mockWorker.js          # Background simulation worker (IMAP OTP & bookings)
+├── frontend/                     # [FRONTEND] UI, Client Pages, Styling & Assets
+│   ├── index.html                # Main SPA dashboard shell (Root view container)
+│   ├── login.html                # 3D animated perspective canvas login portal
+│   ├── css/
+│   │   └── styles.css            # Unified cyberpunk glassmorphism design system (~49 KB)
+│   └── js/
+│       ├── bundle.js             # Standalone production bundle (~4,400+ lines of core UI logic)
+│       ├── app.js                # Modular router & session activity listener
+│       ├── unifiedDashboard.js   # Dashboard tabs & UI rendering engine
+│       └── publicScanner.js      # Schedule ID scanning interface
+│
+├── backend/                      # [BACKEND] Server, State Store & Automation Worker
+│   ├── server.js                 # Native Node.js Server & REST API endpoints
+│   ├── state.js                  # Central State Store with LocalStorage persistence & RBAC
+│   ├── mockWorker.js             # Background simulation worker (IMAP OTP & bookings)
+│   └── package.json              # Backend service configuration
+│
+├── index.html                    # Root Forwarder (Auto-redirects to frontend/login.html)
+├── login.html                    # Root Forwarder (Auto-redirects to frontend/login.html)
+├── package.json                  # Root npm scripts (npm start -> backend server)
+├── README.md                     # Project overview, installation guide & documentation
+├── CODEBASE_STRUCTURE.md         # In-depth architectural documentation (Gujarati & English)
+├── Last Convertation.md          # Session handover, work tracking & master recovery file
+└── .gitignore                    # Git Ignore rules
 ```
 
 ---
 
 ## 🚀 Quick Start / Local Setup
 
-Because this project is built entirely on native Web technologies (HTML, CSS, JavaScript), no build step or node package installation is strictly required.
-
-### Option 1: Open Directly in Browser
-Simply double-click [`login.html`](login.html) or [`index.html`](index.html) in your browser (Google Chrome, Microsoft Edge, Firefox, or Safari).
-
-### Option 2: Run with a Local Static Server
-For optimal browser caching and module support:
+### Option 1: Run with Backend Server (Recommended)
+Run the native Node.js backend server with zero external dependencies:
 
 ```bash
-# Using Python
-python -m http.server 3000
-
-# OR using Node npx serve
-npx serve . -p 3000
+npm start
+# OR
+node backend/server.js
 ```
-Then visit `http://localhost:3000/login.html` in your browser.
+Then open `http://localhost:3000/login.html` in your browser!
+
+### Option 2: Open Directly in Browser
+Simply double-click [`index.html`](index.html) or [`frontend/login.html`](frontend/login.html) in your browser (Google Chrome, Microsoft Edge, Firefox, or Safari).
 
 ---
 

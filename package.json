@@ -1,0 +1,21 @@
+{
+  "name": "amazon-hiring-client-system",
+  "version": "1.0.0",
+  "description": "Amazon Warehouse Shift Booking Automation, Unified Client Control System & Public Scanner",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "node backend/server.js",
+    "test:syntax": "node -c frontend/js/bundle.js && node -c backend/server.js && node -c backend/state.js && node -c backend/mockWorker.js"
+  },
+  "keywords": [
+    "amazon",
+    "shift-booking",
+    "automation",
+    "warehouse",
+    "frontend",
+    "backend"
+  ],
+  "author": "Tanishk Sudani",
+  "license": "ISC"
+}

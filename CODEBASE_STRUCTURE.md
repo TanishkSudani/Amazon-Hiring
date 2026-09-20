@@ -14,19 +14,30 @@
 
 ```text
 Amazon Job/
-├── index.html                 # મુખ્ય એપ્લિકેશન શેલ અને સિંગલ પેજ એન્ટ્રી પોઇન્ટ (SPA Root)
-├── login.html                 # 3D એનિમેટેડ બેકગ્રાઉન્ડ સાથે સુરક્ષિત રોલ-બેઝ્ડ લોગિન પોર્ટલ
+├── frontend/                  # [FRONTEND] UI, ક્લાયન્ટ પેજીસ અને સ્ટાઇલિંગ
+│   ├── index.html             # મુખ્ય એપ્લિકેશન શેલ (Dashboard Root)
+│   ├── login.html             # 3D એનિમેટેડ રોલ-બેઝ્ડ લોગિન પોર્ટલ
+│   ├── css/
+│   │   └── styles.css         # 49 KB ની સાયબરપંક ડાર્ક થીમ ગ્લાસમોર્ફિઝમ ડિઝાઇન સિસ્ટમ
+│   └── js/
+│       ├── bundle.js          # ⭐️ [મુખ્ય ઉત્પાદન ફાઇલ] Standalone પ્રોડક્શન કોડ (UI + Bot)
+│       ├── app.js             # મોડ્યુલર રાઉટર અને સેશન એક્ટિવિટી ગાર્ડ
+│       ├── unifiedDashboard.js # ડેશબોર્ડ ટેબ્સ અને મોડલ કંટ્રોલર્સ
+│       └── publicScanner.js   # એમેઝોન શિફ્ટ અને શેડ્યુલ ID સ્કેનર
+│
+├── backend/                   # [BACKEND] સર્વર, ડેટા સ્ટોર અને ઓટોમેશન વર્કર
+│   ├── server.js              # Node.js બેકએન્ડ સર્વર & REST API એન્ડપોઇન્ટ્સ
+│   ├── state.js               # સેન્ટ્રલ સ્ટેટ મેનેજમેન્ટ અને લોકલસ્ટોરેજ સ્ટોર (RBAC)
+│   ├── mockWorker.js          # બેકગ્રાઉન્ડ સિમ્યુલેશન વર્કર (IMAP OTP & Booking Simulator)
+│   └── package.json           # બેકએન્ડ કન્ફિગરેશન
+│
+├── index.html                 # રૂટ ફોરવર્ડર (Auto-redirects to frontend/login.html)
+├── login.html                 # રૂટ ફોરવર્ડર (Auto-redirects to frontend/login.html)
+├── package.json               # રૂટ પ્રોજેક્ટ સ્ક્રિપ્ટ્સ (npm start)
+├── README.md                  # GitHub રિપોઝિટરી મુખપૃષ્ઠ
 ├── CODEBASE_STRUCTURE.md      # આ ફાઇલ — સંપૂર્ણ પ્રોજેક્ટ આર્કિટેક્ચર માસ્ટર ડોક્યુમેન્ટ
 ├── Last Convertation.md       # સેશન હેન્ડઓવર, સ્ટેટસ અને રેઝ્યુમ્પ્શન માસ્ટર ફાઇલ
-├── css/
-│   └── styles.css             # 49 KB ની સાયબરપંક ડાર્ક થીમ ગ્લાસમોર્ફિઝમ ડિઝાઇન સિસ્ટમ
-└── js/
-    ├── bundle.js              # ⭐️ [મુખ્ય ઉત્પાદન ફાઇલ] 4,428 લાઈનનો Standalone પ્રોડક્શન કોડ
-    ├── app.js                 # મોડ્યુલર રાઉટર અને સેશન એક્ટિવિટી ગાર્ડ
-    ├── state.js               # સેન્ટ્રલ સ્ટેટ મેનેજમેન્ટ અને લોકલસ્ટોરેજ સ્ટોર
-    ├── unifiedDashboard.js    # ડેશબોર્ડ ટેબ્સ, યુઆઈ કંટ્રોલર્સ અને એમેઝોન હાયરિંગ ફીડ
-    ├── publicScanner.js       # એમેઝોન શિફ્ટ અને શેડ્યુલ ID સ્કેનર મોડ્યુલ
-    └── mockWorker.js          # બેકગ્રાઉન્ડ સિમ્યુલેશન વર્કર (IMAP OTP & Booking Simulator)
+└── .gitignore                 # ગિટ ઇગ્નોર નિયમો
 ```
 
 ---

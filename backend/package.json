@@ -1,0 +1,12 @@
+{
+  "name": "amazon-shift-automation-backend",
+  "version": "1.0.0",
+  "description": "Backend services, state store and automation worker for Amazon Shift System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["amazon", "automation", "shift-booking", "backend"],
+  "author": "Tanishk Sudani",
+  "license": "ISC"
+}
