@@ -1,5 +1,5 @@
 /* Live Public Scanner Component - Real-time Amazon Hiring Feed */
-import { store } from './state.js';
+import { store } from '../../../backend/state.js';
 
 // Shared live Amazon hiring data (same as unified dashboard) - DD/MM/YYYY Format
 const LIVE_AMAZON_JOBS = [

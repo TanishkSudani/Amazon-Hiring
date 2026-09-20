@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node backend/server.js",
     "server": "node backend/server.js",
-    "test:syntax": "node -c frontend/js/bundle.js && node -c backend/server.js && node -c backend/state.js && node -c backend/mockWorker.js"
+    "test:syntax": "node -c frontend/js/bundle.js && node -c frontend/js/modules/app.js && node -c frontend/js/modules/dashboard.js && node -c frontend/js/modules/scanner.js && node -c backend/server.js && node -c backend/state.js && node -c backend/mockWorker.js"
   },
   "keywords": [
     "amazon",

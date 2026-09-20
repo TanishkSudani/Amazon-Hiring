@@ -1,6 +1,6 @@
 /* Unified Amazon Client System — Merged Client Dashboard + Agent Panel + Scanner */
-import { store } from './state.js';
-import { workerEngine } from './mockWorker.js';
+import { store } from '../../../backend/state.js';
+import { workerEngine } from '../../../backend/mockWorker.js';
 
 // Helper date formatter: DD/MM/YYYY
 function formatDateDDMMYYYY(dateInput) {

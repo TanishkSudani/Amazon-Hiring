@@ -1,5 +1,5 @@
 /* Main Application Router & Entry Point — Amazon Client System */
-import { initUnifiedDashboard } from './unifiedDashboard.js';
+import { initUnifiedDashboard } from './dashboard.js';
 
 const INACTIVITY_TIMEOUT_MS = 60 * 60 * 1000; // 1 Hour (60 minutes) Inactivity Expiry
 

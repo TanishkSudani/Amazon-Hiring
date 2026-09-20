@@ -44,10 +44,11 @@ Amazon-Hiring/
 │   ├── css/
 │   │   └── styles.css               # ગ્લાસમોર્ફિઝમ ડિઝાઇન સિસ્ટમ (~49 KB)
 │   └── js/
-│       ├── bundle.js                # ⭐️ મુખ્ય પ્રોડક્શન કોડ (UI + બોટ + ઓટોમેશન)
-│       ├── app.js                   # ક્લાયન્ટ રાઉટર અને સેશન ગાર્ડ
-│       ├── unifiedDashboard.js      # ડેશબોર્ડ સ્ક્રીન્સ અને મોડલ કંટ્રોલર્સ
-│       └── publicScanner.js         # Amazon Schedule ID સ્કેનર
+│       ├── bundle.js                # ⭐️ મુખ્ય પ્રોડક્શન બંડલ (UI + બોટ + ઓટોમેશન)
+│       └── modules/                 # 🧩 સોર્સ મોડ્યુલ્સ
+│           ├── app.js               # ક્લાયન્ટ રાઉટર અને સેશન ગાર્ડ
+│           ├── dashboard.js         # ડેશબોર્ડ સ્ક્રીન્સ અને મોડલ્સ
+│           └── scanner.js           # Amazon Schedule ID સ્કેનર
 │
 ├── ⚙️ backend/                      # [BACKEND] સર્વર, સ્ટેટ સ્ટોર અને ઓટોમેશન એન્જિન
 │   ├── server.js                    # Node.js સર્વર & REST APIs (/api/health, /api/status)
