@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amazon Client System — Login</title>
+  <meta name="description" content="Amazon Warehouse Shift Automation - Secure Login Portal">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --blue: #2563eb;
+      --blue2: #38bdf8;
+      --dark: #030712;
+      --dark2: #0b1329;
+      --card: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.68));
+      --border: rgba(56, 189, 248, 0.35);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      perspective: 1200px;
+    }
+
+    /* Animated 3D background */
+    .bg-scene {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(56, 189, 248, 0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.2) 0%, transparent 55%),
+        radial-gradient(ellipse at 60% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+        linear-gradient(135deg, #030712 0%, #0b1329 50%, #030712 100%);
+    }
+
+    /* Floating 3D grid lines */
+    .grid-lines {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      transform: perspective(500px) rotateX(20deg) scale(1.5);
+      transform-origin: center 80%;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      from {
+        background-position: 0 0;
+      }
+
+      to {
+        background-position: 0 60px;
+      }
+    }
+
+    /* Floating particles */
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      animation: float linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-20px) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* Main 3D login card wrapper */
+    .login-scene {
+      position: relative;
+      z-index: 10;
+      perspective: 1000px;
+      animation: sceneEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes sceneEntry {
+      from {
+        transform: translateY(60px) scale(0.85);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .login-card {
+      width: 460px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.5);
+      border-left: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 28px;
+      padding: 48px 44px;
+      backdrop-filter: blur(24px) saturate(210%);
+      -webkit-backdrop-filter: blur(24px) saturate(210%);
+      box-shadow:
+        0 32px 80px rgba(0, 0, 0, 0.65),
+        0 0 45px rgba(56, 189, 248, 0.22),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      transform-style: preserve-3d;
+      position: relative;
+    }
+
+    /* 3D shine overlay */
+    .card-shine {
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Top glow line */
+    .card-glow-line {
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #38bdf8, #3b82f6, #2563eb, transparent);
+      border-radius: 2px;
+      filter: blur(1px);
+    }
+
+    /* Brand */
+    .brand-section {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .brand-icon-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #2563eb 100%);
+      border-radius: 20px;
+      margin-bottom: 16px;
+      border: 1.5px solid rgba(147, 197, 253, 0.7);
+      box-shadow:
+        0 8px 32px rgba(37, 99, 235, 0.6),
+        0 0 25px rgba(59, 130, 246, 0.8),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      transform: translateZ(20px);
+      font-size: 2.2rem;
+      color: #ffffff;
+      text-shadow: 0 0 12px #60a5fa, 0 0 24px #3b82f6;
+      animation: iconPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes iconPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 8px 32px rgba(37, 99, 235, 0.6), 0 0 25px rgba(59, 130, 246, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 8px 48px rgba(37, 99, 235, 0.85), 0 0 35px rgba(96, 165, 250, 0.95), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    .brand-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .brand-subtitle {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* Form fields */
+    .field-group {
+      margin-bottom: 20px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .field-wrap {
+      position: relative;
+    }
+
+    .field-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      color: var(--muted);
+      pointer-events: none;
+      transition: color 0.2s;
+    }
+
+    .field-input {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-top: 1px solid rgba(255, 255, 255, 0.32);
+      border-radius: 12px;
+      padding: 13px 16px 13px 42px;
+      font-size: 0.92rem;
+      color: #fff;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.25s ease;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .field-input::placeholder {
+      color: rgba(148, 163, 184, 0.5);
+    }
+
+    .field-input:focus {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.08);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.35), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .field-input:focus+.field-icon,
+    .field-wrap:focus-within .field-icon {
+      color: #38bdf8;
+    }
+
+    /* Show/hide password */
+    .toggle-pass {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+
+    .toggle-pass:hover {
+      color: #38bdf8;
+    }
+
+    /* 3D Glass Login Button */
+    .btn-login {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.88) 0%, rgba(29, 78, 216, 0.92) 100%);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.5);
+      border-radius: 14px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 8px;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 4px 18px rgba(37, 99, 235, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateZ(10px);
+      letter-spacing: 0.02em;
+    }
+
+    .btn-login::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 42%;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.18), transparent);
+      border-radius: 12px 12px 0 0;
+      pointer-events: none;
+    }
+
+    .btn-login:hover {
+      transform: translateZ(10px) translateY(-2px);
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.96) 0%, rgba(29, 78, 216, 0.98) 100%);
+      box-shadow: 0 6px 22px rgba(37, 99, 235, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+    }
+
+    .btn-login:hover::before {
+      left: 100%;
+    }
+
+    .btn-login:active {
+      transform: translateZ(10px) translateY(0);
+    }
+
+    /* Error message */
+    .error-msg {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: #fca5a5;
+      margin-top: 16px;
+      display: none;
+      animation: shake 0.4s ease;
+    }
+
+    .error-msg.show {
+      display: block;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-8px);
+      }
+
+      75% {
+        transform: translateX(8px);
+      }
+    }
+
+    /* Footer note */
+    .login-footer {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 0.75rem;
+      color: rgba(148, 163, 184, 0.5);
+    }
+
+    /* Demo credentials hint */
+    .demo-hint {
+      background: rgba(79, 70, 229, 0.1);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      color: #a5b4fc;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .demo-hint strong {
+      color: #c7d2fe;
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      .login-card {
+        width: calc(100vw - 32px);
+        padding: 36px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Background -->
+  <div class="bg-scene"></div>
+  <div class="grid-lines"></div>
+
+  <!-- Login Card -->
+  <div class="login-scene">
+    <div class="login-card" id="loginCard">
+      <div class="card-shine"></div>
+      <div class="card-glow-line"></div>
+
+      <!-- Brand -->
+      <div class="brand-section">
+        <div class="brand-icon-wrap">⚡</div>
+        <div class="brand-title">Amazon Client System</div>
+        <div class="brand-subtitle">Shift Automation & Booking Control Portal</div>
+      </div>
+
+      <!-- Form -->
+      <form id="loginForm" autocomplete="off">
+        <div class="field-group">
+          <label class="field-label" for="loginEmail">Email / Username</label>
+          <div class="field-wrap">
+            <input type="text" class="field-input" id="loginEmail" placeholder="your@email.com" autocomplete="off">
+            <span class="field-icon">👤</span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="loginPass">Password</label>
+          <div class="field-wrap">
+            <input type="password" class="field-input" id="loginPass" placeholder="Enter your password"
+              autocomplete="off">
+            <span class="field-icon">🔒</span>
+            <button type="button" class="toggle-pass" id="togglePassBtn" title="Show password">👁</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-login" id="btnLogin">
+          🚀 Sign In to Dashboard
+        </button>
+
+        <div class="error-msg" id="loginError">
+          ⚠️ Invalid credentials. Please try again.
+        </div>
+      </form>
+
+      <div class="login-footer">
+        Amazon Client System v2.0 &bull; Secure Portal &bull; 2026
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Generate particles
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 4 + 2;
+      const hue = Math.random() > 0.6 ? '20' : Math.random() > 0.5 ? '245' : '190';
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random() * 100}%;
+        background:hsl(${hue},90%,60%);
+        opacity:0.4;
+        animation-duration:${Math.random() * 15 + 10}s;
+        animation-delay:${Math.random() * 10}s;
+      `;
+      document.body.appendChild(p);
+    }
+
+    // 3D card tilt on mouse move
+    const card = document.getElementById('loginCard');
+    document.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / (window.innerWidth / 2);
+      const dy = (e.clientY - cy) / (window.innerHeight / 2);
+      card.style.transform = `rotateY(${dx * 8}deg) rotateX(${-dy * 6}deg)`;
+    });
+    document.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+      card.style.transition = 'transform 0.5s ease';
+    });
+
+    // Toggle password visibility
+    document.getElementById('togglePassBtn').addEventListener('click', () => {
+      const inp = document.getElementById('loginPass');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    });
+
+    const STORAGE_KEY = 'AMAZON_AUTOMATION_SYSTEM_STATE_V2';
+
+    function getSystemState() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) return JSON.parse(stored);
+      } catch (e) {
+        console.error('Failed to read state in login:', e);
+      }
+      return null;
+    }
+
+    async function hashPassword(password) {
+      const msgUint8 = new TextEncoder().encode(password);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Pre-computed SHA-256 hashes
+    const HASH_ADMIN2003 = 'b69539d09c2fa7c7bb5e56d2524458f2730aa1858c42b2ec9d71cfa068e2182b'; // SHA-256 of 'admin2003'
+
+    async function authenticateUser(identifier, pass) {
+      if (!identifier || !pass) return null;
+      const cleanId = identifier.trim().toLowerCase();
+      const cleanPass = pass.trim();
+      const passHash = await hashPassword(cleanPass);
+
+      // 1. Main Super Admin: admin2003@gmail.com OR admin (Password: admin2003)
+      if (cleanId === 'admin2003@gmail.com' || cleanId === 'admin') {
+        if (cleanPass === 'admin2003' || passHash === HASH_ADMIN2003) {
+          return {
+            id: 'usr_superadmin',
+            email: 'admin2003@gmail.com',
+            username: 'Tanishk Sudani',
+            name: 'Tanishk Sudani',
+            role: 'SuperAdmin',
+            isMainAdmin: true
+          };
+        }
+        return null; // Invalid credentials for Main Super Admin
+      }
+
+      const state = getSystemState();
+
+      // 2. Sub-Users / RBAC Users Check (added by Super Admin)
+      if (state && Array.isArray(state.subUsers)) {
+        const foundSub = state.subUsers.find(su =>
+          (su.email && su.email.trim().toLowerCase() === cleanId) ||
+          (su.username && su.username.trim().toLowerCase() === cleanId) ||
+          (su.name && su.name.trim().toLowerCase() === cleanId)
+        );
+        if (foundSub) {
+          const storedPass = foundSub.password;
+          const storedHash = foundSub.password_hash;
+          if ((storedHash && storedHash === passHash) || (storedPass && storedPass === cleanPass)) {
+            return {
+              id: foundSub.id,
+              email: foundSub.email,
+              username: foundSub.username || foundSub.name,
+              name: foundSub.name || foundSub.email.split('@')[0],
+              role: foundSub.role || 'Operator',
+              isMainAdmin: false
+            };
+          }
+          return null; // Invalid password
+        }
+      }
+
+      // 3. Candidate / Enrolled Users Check
+      if (state && Array.isArray(state.users)) {
+        const foundUser = state.users.find(u =>
+          (u.email && u.email.trim().toLowerCase() === cleanId) ||
+          (u.username && u.username.trim().toLowerCase() === cleanId)
+        );
+        if (foundUser) {
+          const storedPass = foundUser.password || foundUser.webPass || 'password123';
+          const storedHash = foundUser.password_hash;
+          if ((storedHash && storedHash === passHash) || storedPass === cleanPass) {
+            return {
+              id: foundUser.id,
+              email: foundUser.email,
+              username: foundUser.username,
+              name: foundUser.username || foundUser.email.split('@')[0],
+              role: 'Candidate',
+              isMainAdmin: false
+            };
+          }
+          return null; // Invalid password
+        }
+      }
+
+      // 4. Dynamic Candidate Users only (no hardcoded seed accounts)
+      const defaultCandidateMap = {};
+
+      if (defaultCandidateMap[cleanId]) {
+        const cand = defaultCandidateMap[cleanId];
+        if (cand.pass === cleanPass) {
+          return {
+            id: 'usr_' + cleanId.split('@')[0],
+            email: cleanId,
+            username: cand.name,
+            name: cand.name,
+            role: cand.role || 'Candidate',
+            isMainAdmin: false
+          };
+        }
+        return null;
+      }
+
+      // 5. Agent Customers Check
+      if (state && Array.isArray(state.agentCustomers)) {
+        const foundCust = state.agentCustomers.find(c =>
+          (c.email && c.email.trim().toLowerCase() === cleanId) ||
+          (c.name && c.name.trim().toLowerCase() === cleanId)
+        );
+        if (foundCust) {
+          const storedPass = foundCust.pin || '163207';
+          if (storedPass === cleanPass) {
+            return {
+              id: foundCust.id,
+              email: foundCust.email,
+              username: foundCust.name,
+              name: foundCust.name || foundCust.email.split('@')[0],
+              role: 'Candidate',
+              isMainAdmin: false
+            };
+          }
+          return null;
+        }
+      }
+
+      return null;
+    }
+
+    // Login form submission handler
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const identifier = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPass').value.trim();
+      const btn = document.getElementById('btnLogin');
+      const errBox = document.getElementById('loginError');
+
+      errBox.style.display = 'none';
+
+      if (!identifier || !pass) {
+        errBox.textContent = 'Invalid Email/Username or Password';
+        errBox.style.display = 'block';
+        return;
+      }
+
+      btn.textContent = '⏳ Verifying credentials...';
+      btn.disabled = true;
+
+      let matched = await authenticateUser(identifier, pass);
+      if (!matched && !identifier.includes('@') && identifier.toLowerCase() !== 'admin') {
+        matched = await authenticateUser(identifier + '@gmail.com', pass);
+      }
+
+      if (!matched) {
+        btn.textContent = '⚡ Sign In';
+        btn.disabled = false;
+        errBox.textContent = 'Invalid Email/Username or Password';
+        errBox.style.display = 'block';
+        return;
+      }
+
+      btn.textContent = '✅ Access Granted! Opening Dashboard...';
+      btn.style.background = 'linear-gradient(135deg,#059669,#10b981)';
+
+      sessionStorage.setItem('acs_logged_in', 'true');
+      sessionStorage.setItem('acs_user_id', matched.id);
+      sessionStorage.setItem('acs_user_email', matched.email);
+      sessionStorage.setItem('acs_user_name', matched.name);
+      sessionStorage.setItem('acs_user_role', matched.role);
+      sessionStorage.setItem('acs_is_super_admin', matched.isMainAdmin ? 'true' : 'false');
+      sessionStorage.setItem('acs_is_main_admin', matched.isMainAdmin ? 'true' : 'false');
+      sessionStorage.setItem('acs_login_time', Date.now().toString());
+      sessionStorage.setItem('acs_last_activity', Date.now().toString());
+
+      setTimeout(() => { window.location.href = 'index.html'; }, 500);
+    });
+  </script>
+</body>
+
+</html>
