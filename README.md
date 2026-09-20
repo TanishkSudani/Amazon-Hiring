@@ -2,119 +2,114 @@
 
 [![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla%20ES6+-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![CSS3](https://img.shields.io/badge/CSS3-Cyberpunk%20Glassmorphism-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![HTML5](https://img.shields.io/badge/HTML5-Single%20Page%20App-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-10b981)]()
 [![Platform](https://img.shields.io/badge/Platform-Client--Side%20Browser-38bdf8)]()
 
-> **Amazon Shift Booking Automation, Unified Candidate Management, Live Hiring Feed & Schedule Scanner Portal.**  
-> A zero-dependency, ultra-fast client-side web application crafted with high-performance Vanilla JavaScript and modern 3D Glassmorphism aesthetics.
+> **Amazon Warehouse Shift Booking Automation, Candidate Management & Live Scanner System.**  
+> એકદમ હળવું (Zero external dependencies) અને અતિ ઝડપી વેબ એપ્લિકેશન જે ક્લાયન્ટ અને સર્વર બંને રીતે ચાલે છે.
 
 ---
 
-## 🌟 Key Features
+## 🚀 ઝડપી શરૂઆત (Quick Start)
 
-- **📡 Live Amazon Hiring Feed:**
-  - Real-time aggregation of shifts from `hiring.amazon.ca` (Canada) and `hiring.amazon.com` (USA).
-  - Smart Shift Recovery with direct live warehouse search links (`YYZ4`, `YYC1`, `PHX7`, `DFW6`, `YKF1`, etc.) to eliminate "Job doesn't exist" errors.
-  
-- **🔔 Job Alerts & Cohort Forecasting:**
-  - Warehouse Watch List: Track targeted fulfillment centers per candidate.
-  - Advance 14-day alert notifications for expected Amazon seasonal hiring cohorts.
-  - Automated background monitoring running every 5 minutes.
-
-- **🤖 1-Click Bot Modal & Automation Assistant:**
-  - Instant pre-fill of candidate credentials (Job ID, Schedule ID, Name, Web Password, App Password).
-  - 1-Click "Copy All Credentials" and "Copy Auto-Fill Console Script".
-  - Country Switcher (Canada / USA) to prevent cross-border website warnings.
-
-- **👥 Hierarchical Role-Based Access Control (RBAC):**
-  - **Super Admin:** Full visibility and master control over all candidates, operators, and settings.
-  - **Admin:** Manages own candidates and downstream operators.
-  - **Operator:** Strict data isolation; only views candidates they personally created.
-  - **Candidate:** Secure self-service portal showing only personal application and shift booking status.
-
-- **🔍 Amazon Schedule ID Scanner:**
-  - High-speed scanner for requisition patterns (`SCH-CA-XXXXXX`).
-  - Configurable scan delay, range, and live progress visualizer.
-
-- **🔐 2FA & IMAP OTP Hub:**
-  - Built-in tool for managing Amazon two-factor authentication codes and app passwords.
-
-- **🛡️ Security Guard:**
-  - 1-Hour inactivity auto-logout protection.
-  - `sessionStorage` authentication guard on all protected views.
-
----
-
-## 📂 Project Architecture
-
-```text
-Amazon Job/
-├── frontend/                     # [FRONTEND] UI, Client Pages, Styling & Assets
-│   ├── index.html                # Main SPA dashboard shell (Root view container)
-│   ├── login.html                # 3D animated perspective canvas login portal
-│   ├── css/
-│   │   └── styles.css            # Unified cyberpunk glassmorphism design system (~49 KB)
-│   └── js/
-│       ├── bundle.js             # Standalone production bundle (~4,400+ lines of core UI logic)
-│       ├── app.js                # Modular router & session activity listener
-│       ├── unifiedDashboard.js   # Dashboard tabs & UI rendering engine
-│       └── publicScanner.js      # Schedule ID scanning interface
-│
-├── backend/                      # [BACKEND] Server, State Store & Automation Worker
-│   ├── server.js                 # Native Node.js Server & REST API endpoints
-│   ├── state.js                  # Central State Store with LocalStorage persistence & RBAC
-│   ├── mockWorker.js             # Background simulation worker (IMAP OTP & bookings)
-│   └── package.json              # Backend service configuration
-│
-├── index.html                    # Root Forwarder (Auto-redirects to frontend/login.html)
-├── login.html                    # Root Forwarder (Auto-redirects to frontend/login.html)
-├── package.json                  # Root npm scripts (npm start -> backend server)
-├── README.md                     # Project overview, installation guide & documentation
-├── CODEBASE_STRUCTURE.md         # In-depth architectural documentation (Gujarati & English)
-├── Last Convertation.md          # Session handover, work tracking & master recovery file
-└── .gitignore                    # Git Ignore rules
-```
-
----
-
-## 🚀 Quick Start / Local Setup
-
-### Option 1: Run with Backend Server (Recommended)
-Run the native Node.js backend server with zero external dependencies:
-
+### રીત ૧: Node.js સર્વર સાથે (Recommended)
 ```bash
 npm start
-# OR
-node backend/server.js
 ```
-Then open `http://localhost:3000/login.html` in your browser!
+👉 બ્રાઉઝરમાં આપોઆપ શરૂ થશે: **`http://localhost:3000/login.html`**
 
-### Option 2: Open Directly in Browser
-Simply double-click [`index.html`](index.html) or [`frontend/login.html`](frontend/login.html) in your browser (Google Chrome, Microsoft Edge, Firefox, or Safari).
+### રીત ૨: સીધું બ્રાઉઝરમાં ખોલો (Direct Browser)
+- રૂટ પર રહેલા [**`index.html`**](index.html) અથવા [`frontend/login.html`](frontend/login.html) પર ડબલ-ક્લિક કરો.
 
 ---
 
-## 🔑 Test Login Credentials
+## 🔑 ટેસ્ટિંગ લોગિન ક્રેડેન્શિયલ્સ (Login Credentials)
 
-| Role | Email | Password | Access Scope |
+| રોલ (Role) | ઈમેલ (Email) | પાસવર્ડ (Password) | અધિકાર (Access Level) |
 |---|---|---|---|
-| **Super Admin** | `admin2003@gmail.com` | `admin2003` | Full system access across all candidates and operators |
-| **Operator** | `operator@amazon.com` | `password123` | Operator view; sees only own candidates |
-| **Candidate** | `vishantsutaria4@gmail.com` | `password123` | Personal candidate portal & shift status |
+| **Super Admin** | `admin2003@gmail.com` | `admin2003` / `password123` | આખી સિસ્ટમ, તમામ એડમિન અને ઉમેદવારો પર પૂર્ણ નિયંત્રણ |
+| **Operator** | `operator@amazon.com` | `password123` | ફક્ત પોતાના ઉમેરેલા ઉમેદવારો જ જોઈ શકે |
+| **Candidate** | `vishantsutaria4@gmail.com` | `password123` | ફક્ત પોતાનું શિફ્ટ સ્ટેટસ જોઈ શકે |
 
 ---
 
-## 🛠️ Technology Stack
+## 📂 પ્રોજેક્ટ ફોલ્ડર માળખું (Clean Project Structure)
 
-- **Markup:** Semantic HTML5
-- **Styling:** Vanilla CSS3 (Custom Variables, 3D CSS Transforms, Glassmorphism, Responsive Grid)
-- **Typography:** Google Fonts (`Inter`, `JetBrains Mono`)
-- **Logic:** Vanilla JavaScript (ES6+ Modules, IIFE Production Bundle, Web Storage API)
-- **State Management:** Reactive Custom State Store with `localStorage` synchronization
-- **Version Control:** Git & GitHub
+```text
+Amazon-Hiring/
+│
+├── 🎨 frontend/                     # [FRONTEND] યુઝર ઇન્ટરફેસ અને ક્લાયન્ટ પેજીસ
+│   ├── index.html                   # મુખ્ય ડેશબોર્ડ શેલ
+│   ├── login.html                   # 3D સાયબરપંક એનિમેટેડ લોગિન પોર્ટલ
+│   ├── css/
+│   │   └── styles.css               # ગ્લાસમોર્ફિઝમ ડિઝાઇન સિસ્ટમ (~49 KB)
+│   └── js/
+│       ├── bundle.js                # ⭐️ મુખ્ય પ્રોડક્શન કોડ (UI + બોટ + ઓટોમેશન)
+│       ├── app.js                   # ક્લાયન્ટ રાઉટર અને સેશન ગાર્ડ
+│       ├── unifiedDashboard.js      # ડેશબોર્ડ સ્ક્રીન્સ અને મોડલ કંટ્રોલર્સ
+│       └── publicScanner.js         # Amazon Schedule ID સ્કેનર
+│
+├── ⚙️ backend/                      # [BACKEND] સર્વર, સ્ટેટ સ્ટોર અને ઓટોમેશન એન્જિન
+│   ├── server.js                    # Node.js સર્વર & REST APIs (/api/health, /api/status)
+│   ├── state.js                     # સેન્ટ્રલ સ્ટેટ સ્ટોર (LocalStorage & RBAC)
+│   ├── mockWorker.js                # બેકગ્રાઉન્ડ સિમ્યુલેશન વર્કર (IMAP OTP & Booking)
+│   └── package.json                 # બેકએન્ડ કન્ફિગરેશન
+│
+├── 📄 index.html                    # રૂટ ક્લિક પોઇન્ટ (frontend/login.html ખોલે છે)
+├── 📄 package.json                  # npm start સ્ક્રિપ્ટ્સ
+├── 📄 README.md                     # ⭐️ આ સિંગલ માસ્ટર ગાઈડ ફાઇલ
+└── 📄 .gitignore                    # ગિટ સુરક્ષા નિયમો
+```
+
+---
+
+## ⚡ મુખ્ય વિશેષતાઓ (Key Features)
+
+1. **📡 Live Amazon Hiring Feed:**
+   - કેનેડા (`hiring.amazon.ca`) અને US (`hiring.amazon.com`) ની લાઈવ શિફ્ટ્સ.
+   - Smart Shift Recovery: "Job doesn't exist" ની એરર ન આવે તે માટે સીધી લાઈવ વેરહાઉસ લિંક્સ (`YYZ4`, `YYC1`, `PHX7`, વગેરે).
+
+2. **🔔 Job Alerts & Hiring Predictions:**
+   - ઉમેદવાર મુજબ ચોક્કસ વેરહાઉસ મોનિટરિંગ (Warehouse Watch List).
+   - ૧૪ દિવસ અગાઉથી હાયરિંગ ઓપનિંગ્સ માટે ઓટોમેટિક એલર્ટ (દર ૫ મિનિટે બેકગ્રાઉન્ડ ચેક).
+
+3. **🤖 1-Click Bot Modal & Auto-Fill:**
+   - ઉમેદવારના ડેટા (Job ID, Schedule ID, Passwords) સાથે ૧-ક્લિકમાં ઓટો-ફિલ.
+   - Canada / USA કન્ટ્રી સ્વિચર જેથી કોઈ ક્રોસ-બોર્ડર વોર્નિંગ ન આવે.
+
+4. **👥 Hierarchical Security (RBAC):**
+   - સુપર એડમિન, એડમિન અને ઓપરેટર્સ વચ્ચે કડક ડેટા સુરક્ષા; ઓપરેટરો એકબીજાના ઉમેદવારો જોઈ શકતા નથી.
+
+5. **🔍 Schedule ID Scanner & OTP Tool:**
+   - `SCH-CA-XXXXXX` શિફ્ટ આઈડી સ્કેનિંગ અને 2FA / IMAP OTP હેન્ડલિંગ.
+
+6. **🛡️ 1-Hour Inactivity Guard:**
+   - ૧ કલાક સુધી કોઈ પ્રવૃત્તિ ન થાય તો આપોઆપ સુરક્ષિત લોગઆઉટ.
+
+---
+
+## 🔄 સિસ્ટમ વર્કફ્લો (Runtime Data Flow)
+
+```mermaid
+flowchart LR
+    A["🔐 login.html"] -->|Auth Guard| B["🖥️ Dashboard (bundle.js)"]
+    B --> C["💾 State Store (LocalStorage)"]
+    B --> D["📡 Live Search & Job Alerts"]
+    D --> E["🤖 1-Click Bot Apply (Amazon Portals)"]
+```
+
+---
+
+## 📋 સેશન અને પ્રોજેક્ટ સ્ટેટસ (Session Status)
+
+- [x] Background Auto-Alert Monitor (`runJobAlertCheck`) સક્રિય.
+- [x] Bot Modal Facility fallback ફિક્સ લાગુ.
+- [x] કેશ બસ્ટર `bundle.js?v=61.0` અપડેટ.
+- [x] ફ્રન્ટએન્ડ અને બેકએન્ડનું આર્કિટેક્ચરલ વિભાજન પૂર્ણ.
+- [x] નેટિવ Node.js બેકએન્ડ સર્વર (`backend/server.js`) સક્રિય.
+- [x] ગિટહબ રિપોઝિટરી [**TanishkSudani/Amazon-Hiring**](https://github.com/TanishkSudani/Amazon-Hiring) સાથે સંપૂર્ણ સિંક.
 
 ---
 
 ## 📄 License
-This project is proprietary and intended for Amazon Shift Automation & Candidate Management.
+Proprietary — Developed for Amazon Shift Booking Automation & Client Control.
